@@ -521,19 +521,19 @@ bool sensible(__int8 T[M][N], int row, int column)
     {
         return true;
     }
-    if (column+1<N && T[row][column+1]!=EMPTY) //right
+    if (column+1<M && T[row][column+1]!=EMPTY) //right
     {
         return true;
     }
-    if (row+1<N && column+1<N && T[row+1][column+1]!=EMPTY) //down-right
+    if (row+1<M && column+1<N && T[row+1][column+1]!=EMPTY) //down-right
     {
         return true;
     }
-    if (row+1<N && T[row+1][column]!=EMPTY) //down
+    if (row+1<M && T[row+1][column]!=EMPTY) //down
     {
         return true;
     }
-    if (row+1<N && column-1>=0 && T[row+1][column-1]!=EMPTY) // down-left
+    if (row+1<M && column-1>=0 && T[row+1][column-1]!=EMPTY) // down-left
     {
         return true;
     }
@@ -579,7 +579,7 @@ bool sensible(__int8 T[M][N], int row, int column)
             return true;
         }
     }
-    if (column+(K-1)<N && T[row][column+2]!=EMPTY) //right
+    if (column+(K-1)<M && T[row][column+2]!=EMPTY) //right
     {
         flag = true;
         for (int i=0; i<(K-1)-2; i++)
@@ -595,7 +595,7 @@ bool sensible(__int8 T[M][N], int row, int column)
             return true;
         }
     }
-    if (row+(K-1)<N && column+(K-1)<N && T[row+2][column+2]!=EMPTY) //down-right
+    if (row+(K-1)<M && column+(K-1)<N && T[row+2][column+2]!=EMPTY) //down-right
     {
         flag = true;
         for (int i=0; i<(K-1)-2; i++)
@@ -611,7 +611,7 @@ bool sensible(__int8 T[M][N], int row, int column)
             return true;
         }
     }
-    if (row+(K-1)<N && T[row+2][column]!=EMPTY) //down
+    if (row+(K-1)<M && T[row+2][column]!=EMPTY) //down
     {
         flag = true;
         for (int i=0; i<(K-1)-2; i++)
@@ -627,7 +627,7 @@ bool sensible(__int8 T[M][N], int row, int column)
             return true;
         }
     }
-    if (row+(K-1)<N && column-(K-1)>=0 && T[row+2][column-2]!=EMPTY) // down-left
+    if (row+(K-1)<M && column-(K-1)>=0 && T[row+2][column-2]!=EMPTY) // down-left
     {
         flag = true;
         for (int i=0; i<(K-1)-2; i++)
