@@ -2,9 +2,9 @@
 
 int forced_win(__int8 T[M][N], int now)
 {
-    int crosses = 0;
-    int empties = 0;
-    int circles = 0;
+    int crosses;
+    int empties;
+    int circles;
     int wins = 0;
     int x_empty;
     int y_empty;
@@ -20,21 +20,21 @@ int forced_win(__int8 T[M][N], int now)
             // row
             if (column+K <= N)
             {
-                for (int i=0; i<K; i++)
+                for (int i = 0; i < K; i++)
                 {
-                    switch (T[row][column+i])
+                    switch (T[row][column + i])
                     {
-                    case CROSS:
-                        crosses++;
-                        break;
-                    case EMPTY:
-                        x_empty = row;
-                        y_empty = column+i;
-                        empties++;
-                        break;
-                    case CIRCLE:
-                        circles++;
-                        break;
+                        case CROSS:
+                            crosses++;
+                            break;
+                        case EMPTY:
+                            x_empty = row;
+                            y_empty = column + i;
+                            empties++;
+                            break;
+                        case CIRCLE:
+                            circles++;
+                            break;
                     }
                 }
             }
@@ -495,10 +495,6 @@ int forced_move(__int8 T[M][N], int now)
 
 bool sensible(__int8 T[M][N], int row, int column)
 {
-    /*if (row==0 || row==M-1 || column==0 || column==N-1)
-    {
-        return false;
-    }*/
     // centre
     if (row==((M-1)/2) && column==((N-1)/2))
     {
@@ -517,37 +513,167 @@ bool sensible(__int8 T[M][N], int row, int column)
         return true;
     }
     // neighbour
-    if (row-1>=0 && T[row-1][column]!=EMPTY)
+    if (row-1>=0 && T[row-1][column]!=EMPTY) //up
     {
         return true;
     }
-    if (row-1>=0 && column+1<N && T[row-1][column+1]!=EMPTY)
+    if (row-1>=0 && column+1<N && T[row-1][column+1]!=EMPTY) //up-right
     {
         return true;
     }
-    if (column+1<N && T[row][column+1]!=EMPTY)
+    if (column+1<N && T[row][column+1]!=EMPTY) //right
     {
         return true;
     }
-    if (row+1<N && column+1<N && T[row+1][column+1]!=EMPTY)
+    if (row+1<N && column+1<N && T[row+1][column+1]!=EMPTY) //down-right
     {
         return true;
     }
-    if (row+1<N && T[row+1][column]!=EMPTY)
+    if (row+1<N && T[row+1][column]!=EMPTY) //down
     {
         return true;
     }
-    if (row+1<N && column-1>=0 && T[row+1][column-1]!=EMPTY)
+    if (row+1<N && column-1>=0 && T[row+1][column-1]!=EMPTY) // down-left
     {
         return true;
     }
-    if (column-1>=0 && T[row][column-1]!=EMPTY)
+    if (column-1>=0 && T[row][column-1]!=EMPTY) //left
     {
         return true;
     }
-    if (row-1>=0 && column-1>=0 && T[row-1][column-1]!=EMPTY)
+    if (row-1>=0 && column-1>=0 && T[row-1][column-1]!=EMPTY) //up-left
     {
         return true;
+    }
+    // create or block threat
+    int flag;
+    if (row-(K-1)>=0 && T[row-2][column]!=EMPTY) //up
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row-(i+2)][column] != T[row-(i+3)][column])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (row-(K-1)>=0 && column+(K-1)<N && T[row-2][column+2]!=EMPTY) //up-right
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row-(i+2)][column+(i+2)] != T[row-(i+3)][column+(i+3)])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (column+(K-1)<N && T[row][column+2]!=EMPTY) //right
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row][column+(i+2)] != T[row][column+(i+3)])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (row+(K-1)<N && column+(K-1)<N && T[row+2][column+2]!=EMPTY) //down-right
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row+(i+2)][column+(i+2)] != T[row+(i+3)][column+(i+3)])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (row+(K-1)<N && T[row+2][column]!=EMPTY) //down
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row+(i+2)][column] != T[row+(i+3)][column])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (row+(K-1)<N && column-(K-1)>=0 && T[row+2][column-2]!=EMPTY) // down-left
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row+(i+2)][column-(i+2)] != T[row+(i+3)][column-(i+3)])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (column-(K-1)>=0 && T[row][column-2]!=EMPTY) //left
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row][column-(i+2)] != T[row][column-(i+3)])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    if (row-(K-1)>=0 && column-(K-1)>=0 && T[row-2][column-2]!=EMPTY) //up-left
+    {
+        flag = true;
+        for (int i=0; i<(K-1)-2; i++)
+        {
+            if (T[row-(i+2)][column-(i+2)] != T[row-(i+3)][column-(i+3)])
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
     }
     return false;
 }
