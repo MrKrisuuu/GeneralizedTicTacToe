@@ -5,10 +5,11 @@
 #ifndef BOARD_H_INCLUDED
 #define BOARD_H_INCLUDED
 
-const int M = 4;
-const int N = 4;
-const int K = 4;
-const int ACCURATE = true;
+const int M = 3;
+const int N = 3;
+const int K = 3;
+const bool ACCURATE = false;
+const bool EVERY_MOVE = true;
 
 const int PARTS = 1<<20;
 const int SIZE = (M*N-1)/4+1;

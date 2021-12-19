@@ -135,7 +135,7 @@ bool print_state(int now)
         {
             if (T[row][column] == EMPTY)
             {
-                if(!ACCURATE && !sensible(T, row, column))
+                if(!EVERY_MOVE && !sensible(T, row, column))
                 {
                     cout << "L ";
                 }
