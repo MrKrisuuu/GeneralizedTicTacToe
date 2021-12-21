@@ -228,9 +228,9 @@ bool winable(__int8 T[M][N], int moves)
 {
     int CROSS_moves = (M*N+1)/2 - (moves+1)/2;
     int CIRCLE_moves = (M*N)/2 - (moves)/2;
-    int crosses = 0;
-    int empties = 0;
-    int circles = 0;
+    int crosses;
+    int empties;
+    int circles;
     for (int row=0; row<M; row++)
     {
         for (int column=0; column<N; column++)
