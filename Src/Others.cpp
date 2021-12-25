@@ -14,12 +14,12 @@ int forced_win(__int8 T[M][N], int now)
     {
         for (int column=0; column<N; column++)
         {
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // row
             if (column+K <= N)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i = 0; i < K; i++)
                 {
                     switch (T[row][column + i])
@@ -36,40 +36,44 @@ int forced_win(__int8 T[M][N], int now)
                             circles++;
                             break;
                     }
+                    if (empties==2 || (crosses>0 && circles>0))
+                    {
+                        break;
+                    }
+                }
+                if (crosses == K-1 && empties == 1)
+                {
+                    if (now == CROSS)
+                    {
+                        return CROSS;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
+                }
+                else if (circles == K-1 && empties == 1)
+                {
+                    if (now == CIRCLE)
+                    {
+                        return CIRCLE;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
                 }
             }
-            if (crosses == K-1 && empties == 1)
-            {
-                if (now == CROSS)
-                {
-                    return CROSS;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            else if (circles == K-1 && empties == 1)
-            {
-                if (now == CIRCLE)
-                {
-                    return CIRCLE;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // column
             if (row+K <= M)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row+i][column])
@@ -86,40 +90,44 @@ int forced_win(__int8 T[M][N], int now)
                         circles++;
                         break;
                     }
+                    if (empties==2 || (crosses>0 && circles>0))
+                    {
+                        break;
+                    }
+                }
+                if (crosses == K-1 && empties == 1)
+                {
+                    if (now == CROSS)
+                    {
+                        return CROSS;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
+                }
+                else if (circles == K-1 && empties == 1)
+                {
+                    if (now == CIRCLE)
+                    {
+                        return CIRCLE;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
                 }
             }
-            if (crosses == K-1 && empties == 1)
-            {
-                if (now == CROSS)
-                {
-                    return CROSS;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            else if (circles == K-1 && empties == 1)
-            {
-                if (now == CIRCLE)
-                {
-                    return CIRCLE;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // diagonal right
             if (row+K <= M && column+K <= N)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row+i][column+i])
@@ -136,40 +144,44 @@ int forced_win(__int8 T[M][N], int now)
                         circles++;
                         break;
                     }
+                    if (empties==2 || (crosses>0 && circles>0))
+                    {
+                        break;
+                    }
+                }
+                if (crosses == K-1 && empties == 1)
+                {
+                    if (now == CROSS)
+                    {
+                        return CROSS;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
+                }
+                else if (circles == K-1 && empties == 1)
+                {
+                    if (now == CIRCLE)
+                    {
+                        return CIRCLE;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
                 }
             }
-            if (crosses == K-1 && empties == 1)
-            {
-                if (now == CROSS)
-                {
-                    return CROSS;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            else if (circles == K-1 && empties == 1)
-            {
-                if (now == CIRCLE)
-                {
-                    return CIRCLE;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // diagonal left
             if (row+K <= M && column+1 >= K)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row+i][column-i])
@@ -186,32 +198,36 @@ int forced_win(__int8 T[M][N], int now)
                         circles++;
                         break;
                     }
+                    if (empties==2 || (crosses>0 && circles>0))
+                    {
+                        break;
+                    }
                 }
-            }
-            if (crosses == K-1 && empties == 1)
-            {
-                if (now == CROSS)
+                if (crosses == K-1 && empties == 1)
                 {
-                    return CROSS;
+                    if (now == CROSS)
+                    {
+                        return CROSS;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
                 }
-                if (x != x_empty && y != y_empty)
+                else if (circles == K-1 && empties == 1)
                 {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
-                }
-            }
-            else if (circles == K-1 && empties == 1)
-            {
-                if (now == CIRCLE)
-                {
-                    return CIRCLE;
-                }
-                if (x != x_empty && y != y_empty)
-                {
-                    wins++;
-                    x = x_empty;
-                    y = y_empty;
+                    if (now == CIRCLE)
+                    {
+                        return CIRCLE;
+                    }
+                    if (x != x_empty && y != y_empty)
+                    {
+                        wins++;
+                        x = x_empty;
+                        y = y_empty;
+                    }
                 }
             }
         }
@@ -235,12 +251,12 @@ bool winable(__int8 T[M][N], int moves)
     {
         for (int column=0; column<N; column++)
         {
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // row
             if (column+K <= N)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row][column+i])
@@ -255,28 +271,32 @@ bool winable(__int8 T[M][N], int moves)
                         circles++;
                         break;
                     }
+                    if (crosses>0 && circles>0)
+                    {
+                        break;
+                    }
                 }
-            }
-            if (crosses+empties == K)
-            {
-                if (empties <= CROSS_moves)
+                if (crosses+empties == K)
                 {
-                    return true;
+                    if (empties <= CROSS_moves)
+                    {
+                        return true;
+                    }
                 }
-            }
-            if (circles+empties == K)
-            {
-                if (empties <= CIRCLE_moves)
+                if (circles+empties == K)
                 {
-                    return true;
+                    if (empties <= CIRCLE_moves)
+                    {
+                        return true;
+                    }
                 }
             }
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // column
             if (row+K <= M)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row+i][column])
@@ -291,28 +311,32 @@ bool winable(__int8 T[M][N], int moves)
                         circles++;
                         break;
                     }
+                    if (crosses>0 && circles>0)
+                    {
+                        break;
+                    }
                 }
-            }
-            if (crosses+empties == K)
-            {
-                if (empties <= CROSS_moves)
+                if (crosses+empties == K)
                 {
-                    return true;
+                    if (empties <= CROSS_moves)
+                    {
+                        return true;
+                    }
                 }
-            }
-            if (circles+empties == K)
-            {
-                if (empties <= CIRCLE_moves)
+                if (circles+empties == K)
                 {
-                    return true;
+                    if (empties <= CIRCLE_moves)
+                    {
+                        return true;
+                    }
                 }
             }
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // diagonal right
             if (row+K <= M && column+K <= N)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row+i][column+i])
@@ -327,28 +351,32 @@ bool winable(__int8 T[M][N], int moves)
                         circles++;
                         break;
                     }
+                    if (crosses>0 && circles>0)
+                    {
+                        break;
+                    }
                 }
-            }
-            if (crosses+empties == K)
-            {
-                if (empties <= CROSS_moves)
+                if (crosses+empties == K)
                 {
-                    return true;
+                    if (empties <= CROSS_moves)
+                    {
+                        return true;
+                    }
                 }
-            }
-            if (circles+empties == K)
-            {
-                if (empties <= CIRCLE_moves)
+                if (circles+empties == K)
                 {
-                    return true;
+                    if (empties <= CIRCLE_moves)
+                    {
+                        return true;
+                    }
                 }
             }
-            crosses = 0;
-            empties = 0;
-            circles = 0;
             // diagonal left
             if (row+K <= M && column+1 >= K)
             {
+                crosses = 0;
+                empties = 0;
+                circles = 0;
                 for (int i=0; i<K; i++)
                 {
                     switch (T[row+i][column-i])
@@ -363,20 +391,24 @@ bool winable(__int8 T[M][N], int moves)
                         circles++;
                         break;
                     }
+                    if (crosses>0 && circles>0)
+                    {
+                        break;
+                    }
                 }
-            }
-            if (crosses+empties == K)
-            {
-                if (empties <= CROSS_moves)
+                if (crosses+empties == K)
                 {
-                    return true;
+                    if (empties <= CROSS_moves)
+                    {
+                        return true;
+                    }
                 }
-            }
-            if (circles+empties == K)
-            {
-                if (empties <= CIRCLE_moves)
+                if (circles+empties == K)
                 {
-                    return true;
+                    if (empties <= CIRCLE_moves)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -387,19 +419,19 @@ bool winable(__int8 T[M][N], int moves)
 
 int forced_move(__int8 T[M][N], int now)
 {
-    int empties = 0;
-    int not_nows = 0;
+    int empties;
+    int not_nows;
     int x;
     int y;
     for (int row=0; row<M; row++)
     {
         for (int column=0; column<N; column++)
         {
-            empties = 0;
-            not_nows = 0;
             // row
             if (column+K <= N)
             {
+                empties = 0;
+                not_nows = 0;
                 for (int i=0; i<K; i++)
                 {
                     if (T[row][column+i] == EMPTY)
@@ -413,16 +445,16 @@ int forced_move(__int8 T[M][N], int now)
                         not_nows++;
                     }
                 }
+                if (not_nows == K-1 && empties == 1)
+                {
+                    return x*N+y;
+                }
             }
-            if (not_nows == K-1 && empties == 1)
-            {
-                return x*N+y;
-            }
-            empties = 0;
-            not_nows = 0;
             // column
             if (row+K <= M)
             {
+                empties = 0;
+                not_nows = 0;
                 for (int i=0; i<K; i++)
                 {
                     if (T[row+i][column] == EMPTY)
@@ -436,16 +468,16 @@ int forced_move(__int8 T[M][N], int now)
                         not_nows++;
                     }
                 }
+                if (not_nows == K-1 && empties == 1)
+                {
+                    return x*N+y;
+                }
             }
-            if (not_nows == K-1 && empties == 1)
-            {
-                return x*N+y;
-            }
-            empties = 0;
-            not_nows = 0;
             // diagonal right
             if (row+K <= M && column+K <= N)
             {
+                empties = 0;
+                not_nows = 0;
                 for (int i=0; i<K; i++)
                 {
                     if (T[row+i][column+i] == EMPTY)
@@ -459,16 +491,16 @@ int forced_move(__int8 T[M][N], int now)
                         not_nows++;
                     }
                 }
+                if (not_nows == K-1 && empties == 1)
+                {
+                    return x*N+y;
+                }
             }
-            if (not_nows == K-1 && empties == 1)
-            {
-                return x*N+y;
-            }
-            empties = 0;
-            not_nows = 0;
             // diagonal left
             if (row+K <= M && column+1 >= K)
             {
+                empties = 0;
+                not_nows = 0;
                 for (int i=0; i<K; i++)
                 {
                     if (T[row+i][column-i] == EMPTY)
@@ -482,10 +514,10 @@ int forced_move(__int8 T[M][N], int now)
                         not_nows++;
                     }
                 }
-            }
-            if (not_nows == K-1 && empties == 1)
-            {
-                return x*N+y;
+                if (not_nows == K-1 && empties == 1)
+                {
+                    return x*N+y;
+                }
             }
         }
     }

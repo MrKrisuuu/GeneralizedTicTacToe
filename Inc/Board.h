@@ -6,7 +6,6 @@
 #ifndef BOARD_H_INCLUDED
 #define BOARD_H_INCLUDED
 
-
 class Board
 {
     unsigned __int8 T[SIZE];

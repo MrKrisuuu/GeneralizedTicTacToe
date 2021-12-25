@@ -2,7 +2,6 @@
 #include <set>
 #include <chrono>
 #include <cmath>
-#include <algorithm>
 #include "Inc/Board.h"
 #include "Inc/Others.h"
 #include "Inc/Cleaner.h"
