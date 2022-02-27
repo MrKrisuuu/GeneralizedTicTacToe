@@ -6,6 +6,7 @@
 #include "Inc/Others.h"
 #include "Inc/Cleaner.h"
 #include "Inc/Printer.h"
+#include "Inc/States.h"
 using namespace std;
 
 
