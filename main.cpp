@@ -27,7 +27,7 @@ int calculate(int now, int depth)
     {
         return TIE;
     }
-    if (depth == MAX_DEPTH)
+    if (depth >= MAX_DEPTH)
     {
         return UNKNOWN;
     }
@@ -53,21 +53,6 @@ int calculate(int now, int depth)
     }
     int state = LOSE;
     int tmp;
-    int my_move = forced_move(T, now);
-    if (my_move != -1)
-    {
-        T[my_move/N][my_move%N] = now;
-        tmp = -calculate(-now, depth);
-        T[my_move/N][my_move%N] = EMPTY;
-        if (tmp == -UNKNOWN)
-        {
-            tmp = -tmp;
-        }
-        state = max(tmp, state);
-        board.set_state(state);
-        boards[my_key].insert(board);
-        return state;
-    }
     for (int row=0; row<M; row++)
     {
         for (int column=0; column<N; column++)
@@ -75,7 +60,7 @@ int calculate(int now, int depth)
             if (T[row][column] == EMPTY && sensible(T, row, column))
             {
                 T[row][column] = now;
-                tmp = -calculate(-now, depth+1);
+                tmp = -calculate(-now, depth + usefulness(T, row, column));
                 T[row][column] = EMPTY;
                 if (tmp == -UNKNOWN)
                 {
@@ -221,7 +206,7 @@ int main()
         for(int i=1; i<M*N+1 - moves; i++)
         {
             MAX_DEPTH = i;
-            cout << "Depth: " << MAX_DEPTH << " (" << MAX_DEPTH+moves << "/" << M*N << ")" << endl;
+            cout << "Depth: " << MAX_DEPTH << " (" << MAX_DEPTH+moves << "/" << 3*M*N << ")" << endl;
             auto begin = chrono::high_resolution_clock::now();
             done = print_state(now);
             auto end = chrono::high_resolution_clock::now();
