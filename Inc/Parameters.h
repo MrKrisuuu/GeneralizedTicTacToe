@@ -2,9 +2,9 @@
 #define TICTACTOE_PARAMETERS_H
 
 /// to change
-const int M = 15;
-const int N = 15;
-const int K = 5;
+const int M = 4;
+const int N = 5;
+const int K = 4;
 const bool ACCURATE = false;
 const bool EVERY_MOVE = false;
 

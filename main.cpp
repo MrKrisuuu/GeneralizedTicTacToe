@@ -207,7 +207,7 @@ int main()
         for(int i=1; i<M*N+1 - moves; i++)
         {
             MAX_DEPTH = i;
-            cout << "Depth: " << MAX_DEPTH << " (" << MAX_DEPTH+moves << "/" << 3*M*N << ")" << endl;
+            cout << "Depth: " << MAX_DEPTH << " (" << MAX_DEPTH+moves << "/" << M*N << ")" << endl;
             auto begin = chrono::high_resolution_clock::now();
             done = print_state(now);
             auto end = chrono::high_resolution_clock::now();
