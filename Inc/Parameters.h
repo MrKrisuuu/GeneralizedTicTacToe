@@ -4,8 +4,7 @@
 /// to change
 const int M = 6;
 const int N = 6;
-const int K = 4Y
-        ;
+const int K = 4;
 const bool ACCURATE = false;
 const bool EVERY_MOVE = true;
 
