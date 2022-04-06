@@ -17,12 +17,15 @@ bool S[8];
 int MAX_DEPTH = M*N;
 
 
-int calculate(int now, int depth)
+/// 3 == win for CROSS
+/// 0 == TIE
+/// -3 == win for
+int calculate(int now, int depth, int alpha, int beta)
 {
     int forced = forced_win(T, now);
     if (forced != EMPTY)
     {
-        return forced * now * WIN;
+        return forced * WIN;
     }
     if (!winable(T, depth+moves))
     {
@@ -30,7 +33,14 @@ int calculate(int now, int depth)
     }
     if (depth >= MAX_DEPTH)
     {
-        return UNKNOWN;
+        if (now == CROSS)
+        {
+            return -UNKNOWN;
+        }
+        else
+        {
+            return UNKNOWN;
+        }
     }
     Board board = Board(T, NORMAL);
     int my_key = board.get_key();
@@ -52,47 +62,26 @@ int calculate(int now, int depth)
             }
         }
     }
-    int state = LOSE;
     int tmp;
-    for (int row=0; row<M; row++)
-    {
-        for (int column=0; column<N; column++)
-        {
-            if (T[row][column] == EMPTY && sensible(T, row, column))
-            {
-                T[row][column] = now;
-                tmp = -calculate(-now, depth + usefulness(T, row, column));
-                T[row][column] = EMPTY;
-                if (tmp == -UNKNOWN)
-                {
-                    tmp = -tmp;
-                }
-                state = max(tmp, state);
-                if (state == WIN)
-                {
-                    board.set_state(state);
-                    boards[my_key].insert(board);
-                    return state;
-                }
-            }
-        }
-    }
-    if (state != UNKNOWN && ACCURATE)
-    {
+    if (now == CROSS){ // CROSS
+        int state = MINF;
         for (int row=0; row<M; row++)
         {
             for (int column=0; column<N; column++)
             {
-                if (T[row][column] == EMPTY && !sensible(T, row, column))
+                if (T[row][column] == EMPTY && sensible(T, row, column))
                 {
-                    T[row][column] = now;
-                    tmp = -calculate(-now, depth+1);
+                    T[row][column] = CROSS;
+                    tmp = calculate(CIRCLE, depth+1, alpha, beta);
                     T[row][column] = EMPTY;
-                    if (tmp == -UNKNOWN)
-                    {
-                        tmp = -tmp;
-                    }
                     state = max(tmp, state);
+                    alpha = max(alpha, state);
+                    if (beta<=alpha)
+                    {
+                        board.set_state(state);
+                        boards[my_key].insert(board);
+                        return state;
+                    }
                     if (state == WIN)
                     {
                         board.set_state(state);
@@ -102,12 +91,109 @@ int calculate(int now, int depth)
                 }
             }
         }
+        if (state != UNKNOWN && ACCURATE)
+        {
+            for (int row=0; row<M; row++)
+            {
+                for (int column=0; column<N; column++)
+                {
+                    if (T[row][column] == EMPTY && !sensible(T, row, column))
+                    {
+                        T[row][column] = CROSS;
+                        tmp = calculate(CIRCLE, depth+1, alpha, beta);
+                        T[row][column] = EMPTY;
+                        state = max(tmp, state);
+                        alpha = max(alpha, state);
+                        if (beta<=alpha)
+                        {
+                            board.set_state(state);
+                            boards[my_key].insert(board);
+                            return state;
+                        }
+                        if (state == WIN)
+                        {
+                            board.set_state(state);
+                            boards[my_key].insert(board);
+                            return state;
+                        }
+                    }
+                }
+            }
+        }
+        if (state == UNKNOWN)
+        {
+            state = -state;
+        }
+        board.set_state(state);
+        boards[my_key].insert(board);
+        return state;
+    }else{ // CIRCLE
+        int state = PINF;
+        for (int row=0; row<M; row++)
+        {
+            for (int column=0; column<N; column++)
+            {
+                if (T[row][column] == EMPTY && sensible(T, row, column))
+                {
+                    T[row][column] = CIRCLE;
+                    tmp = calculate(CROSS, depth+1, alpha, beta);
+                    T[row][column] = EMPTY;
+                    state = min(tmp, state);
+                    beta = min(beta, state);
+                    if (beta<=alpha)
+                    {
+                        board.set_state(state);
+                        boards[my_key].insert(board);
+                        return state;
+                    }
+                    if (state == LOSE)
+                    {
+                        board.set_state(state);
+                        boards[my_key].insert(board);
+                        return state;
+                    }
+                }
+            }
+        }
+        if (state != UNKNOWN && ACCURATE)
+        {
+            for (int row=0; row<M; row++)
+            {
+                for (int column=0; column<N; column++)
+                {
+                    if (T[row][column] == EMPTY && !sensible(T, row, column))
+                    {
+                        T[row][column] = CIRCLE;
+                        tmp = calculate(CROSS, depth+1, alpha, beta);
+                        T[row][column] = EMPTY;
+                        state = min(tmp, state);
+                        beta = min(beta, state);
+                        if (beta<=alpha)
+                        {
+                            board.set_state(state);
+                            boards[my_key].insert(board);
+                            return state;
+                        }
+                        state = max(tmp, state);
+                        if (state == LOSE)
+                        {
+                            board.set_state(state);
+                            boards[my_key].insert(board);
+                            return state;
+                        }
+                    }
+                }
+            }
+        }
+        if (state == -UNKNOWN)
+        {
+            state = -state;
+        }
+        board.set_state(state);
+        boards[my_key].insert(board);
+        return state;
     }
-    board.set_state(state);
-    boards[my_key].insert(board);
-    return state;
 }
-
 
 bool print_state(int now)
 {
@@ -134,7 +220,11 @@ bool print_state(int now)
                     }
                     else
                     {
-                        state = -calculate(-now, 1);
+                        state = calculate(-now, 1, MINF, PINF);
+                    }
+                    if (now == CIRCLE)
+                    {
+                        state = -state;
                     }
                     if (state == -UNKNOWN)
                     {

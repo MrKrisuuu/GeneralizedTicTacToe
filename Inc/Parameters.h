@@ -2,11 +2,12 @@
 #define TICTACTOE_PARAMETERS_H
 
 /// to change
-const int M = 4;
-const int N = 5;
-const int K = 4;
+const int M = 6;
+const int N = 6;
+const int K = 4Y
+        ;
 const bool ACCURATE = false;
-const bool EVERY_MOVE = false;
+const bool EVERY_MOVE = true;
 
 const int PARTS = 1<<20;
 
@@ -19,9 +20,11 @@ const int EMPTY = 0;
 const int CIRCLE = -1;
 
 const int WIN = 3;
-const int UNKNOWN = 2;
+const int UNKNOWN = 1;
 const int TIE = 0;
 const int LOSE = -3;
+const int PINF = 100;
+const int MINF = -100;
 
 const int NORMAL = 0;
 const int NORMAL_90 = 1;

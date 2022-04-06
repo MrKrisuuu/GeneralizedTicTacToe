@@ -189,14 +189,6 @@ bool sensible(__int8 T[M][N], int row, int column)
 
 int usefulness(__int8 T[M][N], int row, int column)
 {
-    /*if ((row==0 && column==0) || (row==0 && column==M) || (row==N && column==0) || (row==N && column==M))
-    {
-        return 3;
-    }
-    if (row==0 || column==0 || row==N || column==M)
-    {
-        return 3;
-    }*/
     return 1;
 }
 

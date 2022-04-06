@@ -11,7 +11,7 @@ void print_boards(std::set<Board> boards[PARTS])
         //cout << i+1 << "==" << boards[i].size() << endl;
         for_each(boards[i].begin(), boards[i].end(), [&unknown_boards](auto it)
         {
-            if (it.get_state() == UNKNOWN) unknown_boards++;
+            if (it.get_state() == UNKNOWN || it.get_state() == -UNKNOWN) unknown_boards++;
         });
     }
     std::cout << "Boards remembered: " << all_boards << std::endl;

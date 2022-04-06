@@ -8,7 +8,7 @@ void clean_boards_unknown(std::set<Board> boards[PARTS])
         auto it = boards[i].begin();
         while (it != boards[i].end())
         {
-            if ((*it).get_state() == UNKNOWN)
+            if ((*it).get_state() == UNKNOWN || (*it).get_state() == -UNKNOWN)
             {
                 it = boards[i].erase(it);
             }
