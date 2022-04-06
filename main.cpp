@@ -18,8 +18,10 @@ int MAX_DEPTH = M*N;
 
 
 /// 3 == win for CROSS
+/// 1 == unknown for CROSS
 /// 0 == TIE
-/// -3 == win for
+/// -1 == unknown for CIRCLE
+/// -3 == win for CIRCLE
 int calculate(int now, int depth, int alpha, int beta)
 {
     int forced = forced_win(T, now);
@@ -33,14 +35,7 @@ int calculate(int now, int depth, int alpha, int beta)
     }
     if (depth >= MAX_DEPTH)
     {
-        if (now == CROSS)
-        {
-            return -UNKNOWN;
-        }
-        else
-        {
-            return UNKNOWN;
-        }
+        return -now * UNKNOWN;
     }
     Board board = Board(T, NORMAL);
     int my_key = board.get_key();
@@ -76,7 +71,7 @@ int calculate(int now, int depth, int alpha, int beta)
                     T[row][column] = EMPTY;
                     state = max(tmp, state);
                     alpha = max(alpha, state);
-                    if (beta<=alpha)
+                    if (beta<=alpha && AB)
                     {
                         board.set_state(state);
                         boards[my_key].insert(board);
@@ -104,7 +99,7 @@ int calculate(int now, int depth, int alpha, int beta)
                         T[row][column] = EMPTY;
                         state = max(tmp, state);
                         alpha = max(alpha, state);
-                        if (beta<=alpha)
+                        if (beta<=alpha && AB)
                         {
                             board.set_state(state);
                             boards[my_key].insert(board);
@@ -140,7 +135,7 @@ int calculate(int now, int depth, int alpha, int beta)
                     T[row][column] = EMPTY;
                     state = min(tmp, state);
                     beta = min(beta, state);
-                    if (beta<=alpha)
+                    if (beta<=alpha && AB)
                     {
                         board.set_state(state);
                         boards[my_key].insert(board);
@@ -168,7 +163,7 @@ int calculate(int now, int depth, int alpha, int beta)
                         T[row][column] = EMPTY;
                         state = min(tmp, state);
                         beta = min(beta, state);
-                        if (beta<=alpha)
+                        if (beta<=alpha && AB)
                         {
                             board.set_state(state);
                             boards[my_key].insert(board);
@@ -216,7 +211,7 @@ bool print_state(int now)
                     T[row][column] = now;
                     if (Board(T, NORMAL).check() != EMPTY)
                     {
-                        state = WIN;
+                        state = WIN * now;
                     }
                     else
                     {
@@ -332,5 +327,24 @@ int main()
         make_move(T, x, y, now, moves);
         clean_boards_known(boards, T);
     }
+    cout << "END!" << endl;
+    Board(T, NORMAL).print();
     return 0;
 }
+/*
+1 2
+2 3
+1 3
+1 4
+3 2
+2 2
+1 0
+1 1
+2 1
+4 3
+3 0
+0 3
+2 0
+0 0
+3 1
+ */

@@ -5,9 +5,11 @@
 const int M = 6;
 const int N = 6;
 const int K = 4;
+
+
 const bool ACCURATE = false;
 const bool EVERY_MOVE = true;
-
+const bool AB = true;
 const int PARTS = 1<<20;
 
 
