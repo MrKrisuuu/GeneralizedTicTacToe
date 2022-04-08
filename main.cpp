@@ -70,7 +70,6 @@ int calculate(int now, int depth, int alpha, int beta)
                     tmp = calculate(CIRCLE, depth+1, alpha, beta);
                     T[row][column] = EMPTY;
                     state = max(tmp, state);
-                    alpha = max(alpha, state);
                     if (beta<=alpha && AB)
                     {
                         board.set_state(state);
@@ -134,7 +133,6 @@ int calculate(int now, int depth, int alpha, int beta)
                     tmp = calculate(CROSS, depth+1, alpha, beta);
                     T[row][column] = EMPTY;
                     state = min(tmp, state);
-                    beta = min(beta, state);
                     if (beta<=alpha && AB)
                     {
                         board.set_state(state);
