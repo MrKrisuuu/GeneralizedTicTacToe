@@ -97,7 +97,6 @@ int calculate(int now, int depth, int alpha, int beta)
                         tmp = calculate(CIRCLE, depth+1, alpha, beta);
                         T[row][column] = EMPTY;
                         state = max(tmp, state);
-                        alpha = max(alpha, state);
                         if (beta<=alpha && AB)
                         {
                             board.set_state(state);
@@ -154,20 +153,18 @@ int calculate(int now, int depth, int alpha, int beta)
             {
                 for (int column=0; column<N; column++)
                 {
-                    if (T[row][column] == EMPTY && !sensible(T, row, column))
+                    if (T[row][column] == EMPTY && sensible(T, row, column))
                     {
                         T[row][column] = CIRCLE;
                         tmp = calculate(CROSS, depth+1, alpha, beta);
                         T[row][column] = EMPTY;
                         state = min(tmp, state);
-                        beta = min(beta, state);
                         if (beta<=alpha && AB)
                         {
                             board.set_state(state);
                             boards[my_key].insert(board);
                             return state;
                         }
-                        state = max(tmp, state);
                         if (state == LOSE)
                         {
                             board.set_state(state);
