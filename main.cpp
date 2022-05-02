@@ -70,6 +70,10 @@ int calculate(int now, int depth, int alpha, int beta)
                     tmp = calculate(CIRCLE, depth+1, alpha, beta);
                     T[row][column] = EMPTY;
                     state = max(tmp, state);
+                    if (state != UNKNOWN)
+                    {
+                        alpha = max(alpha, state);
+                    }
                     if (beta<=alpha && AB)
                     {
                         board.set_state(state);
@@ -97,6 +101,10 @@ int calculate(int now, int depth, int alpha, int beta)
                         tmp = calculate(CIRCLE, depth+1, alpha, beta);
                         T[row][column] = EMPTY;
                         state = max(tmp, state);
+                        if (state != UNKNOWN)
+                        {
+                            alpha = max(alpha, state);
+                        }
                         if (beta<=alpha && AB)
                         {
                             board.set_state(state);
@@ -132,6 +140,10 @@ int calculate(int now, int depth, int alpha, int beta)
                     tmp = calculate(CROSS, depth+1, alpha, beta);
                     T[row][column] = EMPTY;
                     state = min(tmp, state);
+                    if (state != -UNKNOWN)
+                    {
+                        beta = min(beta, state);
+                    }
                     if (beta<=alpha && AB)
                     {
                         board.set_state(state);
@@ -147,18 +159,22 @@ int calculate(int now, int depth, int alpha, int beta)
                 }
             }
         }
-        if (state != UNKNOWN && ACCURATE)
+        if (state != -UNKNOWN && ACCURATE)
         {
             for (int row=0; row<M; row++)
             {
                 for (int column=0; column<N; column++)
                 {
-                    if (T[row][column] == EMPTY && sensible(T, row, column))
+                    if (T[row][column] == EMPTY && !sensible(T, row, column))
                     {
                         T[row][column] = CIRCLE;
                         tmp = calculate(CROSS, depth+1, alpha, beta);
                         T[row][column] = EMPTY;
                         state = min(tmp, state);
+                        if (state != -UNKNOWN)
+                        {
+                            beta = min(beta, state);
+                        }
                         if (beta<=alpha && AB)
                         {
                             board.set_state(state);

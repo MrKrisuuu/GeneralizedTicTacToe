@@ -2,17 +2,16 @@
 #define TICTACTOE_PARAMETERS_H
 
 /// to change
-const int M = 5;
-const int N = 5;
+const int M = 4;
+const int N = 4;
 const int K = 4;
 
 
 const bool ACCURATE = false;
 const bool EVERY_MOVE = true;
-const bool AB = false; /// don't work yet
+const bool AB = false; /// maybe work?
 
 const int PARTS = 1<<20;
-
 
 /// not to change
 const int SIZE = (M*N-1)/4+1;
